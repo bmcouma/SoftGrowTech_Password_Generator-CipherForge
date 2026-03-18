@@ -15,6 +15,7 @@ Open `index.html` directly in any modern browser. No server, no build tools, no 
 ## ✨ Features
 
 ### Core (as required)
+
 - **Generate random passwords** on button click
 - **Options for numbers, symbols, and uppercase letters** via toggleable character set cards
 - **Display generated password** on screen with colour-coded character types
@@ -22,6 +23,7 @@ Open `index.html` directly in any modern browser. No server, no build tools, no 
 - **Clean, professional interface** with a dark terminal aesthetic
 
 ### Beyond Requirements
+
 - **Cryptographically secure** — uses `window.crypto.getRandomValues` with rejection sampling to eliminate modulo bias. Never uses `Math.random()`
 - **Entropy calculation** — Shannon entropy displayed in bits per password
 - **Strength meter** — five levels (Very Weak → Very Strong) based on NIST SP 800-63B thresholds
@@ -43,27 +45,27 @@ Open `index.html` directly in any modern browser. No server, no build tools, no 
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| **HTML5** | Semantic structure, ARIA roles, accessibility |
-| **CSS3** | Design system, CSS variables, Grid, Flexbox, animations |
-| **Vanilla JavaScript (ES6+)** | OOP password engine, Web Crypto API, clipboard |
-| **Google Fonts** | JetBrains Mono (output/code) + Syne (display/UI) |
-| **Web Crypto API** | Cryptographically secure random number generation |
+| Technology                    | Purpose                                                 |
+| ----------------------------- | ------------------------------------------------------- |
+| **HTML5**                     | Semantic structure, ARIA roles, accessibility           |
+| **CSS3**                      | Design system, CSS variables, Grid, Flexbox, animations |
+| **Vanilla JavaScript (ES6+)** | OOP password engine, Web Crypto API, clipboard          |
+| **Google Fonts**              | JetBrains Mono (output/code) + Syne (display/UI)        |
+| **Web Crypto API**            | Cryptographically secure random number generation       |
 
 ---
 
 ## 🎨 Design System
 
-| Token | Value | Usage |
-|---|---|---|
-| Base | `#080c10` | Page background |
-| Surface | `#0d1117` | Panel backgrounds |
-| Green | `#00ffa0` | Primary accent, numbers |
-| Blue | `#4d9fff` | Uppercase characters |
-| Pink | `#ff7eb6` | Symbol characters |
-| Crit | `#ff4757` | Very Weak strength |
-| Great | `#00ffa0` | Very Strong strength |
+| Token   | Value     | Usage                   |
+| ------- | --------- | ----------------------- |
+| Base    | `#080c10` | Page background         |
+| Surface | `#0d1117` | Panel backgrounds       |
+| Green   | `#00ffa0` | Primary accent, numbers |
+| Blue    | `#4d9fff` | Uppercase characters    |
+| Pink    | `#ff7eb6` | Symbol characters       |
+| Crit    | `#ff4757` | Very Weak strength      |
+| Great   | `#00ffa0` | Very Strong strength    |
 
 **Typography:** JetBrains Mono (password output, code) · Syne (UI headings)
 
@@ -86,22 +88,22 @@ CipherForge/
 
 ## ⌨️ Keyboard Shortcuts
 
-| Shortcut | Action |
-|---|---|
-| `Ctrl + G` | Generate new password |
+| Shortcut   | Action                                   |
+| ---------- | ---------------------------------------- |
+| `Ctrl + G` | Generate new password                    |
 | `Ctrl + C` | Copy password (when not in a text input) |
 
 ---
 
 ## 🔑 Strength Thresholds
 
-| Level | Entropy | Description |
-|---|---|---|
-| Very Weak | < 28 bits | Trivially crackable |
-| Weak | 28 – 35 bits | Vulnerable to brute force |
-| Fair | 36 – 59 bits | Moderate protection |
-| Strong | 60 – 95 bits | Good for most accounts |
-| Very Strong | 96+ bits | Enterprise / high-security |
+| Level       | Entropy      | Description                |
+| ----------- | ------------ | -------------------------- |
+| Very Weak   | < 28 bits    | Trivially crackable        |
+| Weak        | 28 – 35 bits | Vulnerable to brute force  |
+| Fair        | 36 – 59 bits | Moderate protection        |
+| Strong      | 60 – 95 bits | Good for most accounts     |
+| Very Strong | 96+ bits     | Enterprise / high-security |
 
 ---
 
@@ -109,10 +111,10 @@ CipherForge/
 
 ```bash
 # Clone the repository
-git clone https://github.com/bmcouma/SoftGrowTech_Password_Generator-CipherForge-.git
+git clone https://github.com/bmcouma/SoftGrowTech_Password_Generator-CipherForge.git
 
 # Navigate into the project
-cd SoftGrowTech_Password_Generator-CipherForge-
+cd SoftGrowTech_Password_Generator-CipherForge
 
 # Open in browser
 open index.html
