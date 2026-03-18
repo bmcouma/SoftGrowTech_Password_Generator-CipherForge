@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CipherForge — A professional-grade password generator. Generate cryptographically strong passwords instantly." />
+  <meta name="theme-color" content="#080c10" />
+  <title>CipherForge — Password Generator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- JetBrains Mono for code/password output, Syne for display headings -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Skip link -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================
+       BACKGROUND GRID DECORATION
+  ============================================================ -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">&#9670;</span>
+        <span class="brand-name">CipherForge</span>
+        <span class="brand-version" aria-label="Version 2.0">v2.0</span>
+      </div>
+      <p class="brand-tagline">Enterprise-grade password generation in your browser.</p>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+  ============================================================ -->
+  <main id="main" class="main-layout">
+
+    <!-- ========== LEFT COLUMN: GENERATOR ========== -->
+    <section class="generator-panel" aria-labelledby="generatorHeading">
+      <h1 id="generatorHeading" class="panel-title">
+        <span class="title-line-1">Generate</span>
+        <span class="title-line-2">Password</span>
+      </h1>
+
+      <!-- ---- OUTPUT DISPLAY ---- -->
+      <div class="output-wrapper" role="region" aria-label="Generated password output">
+        <div
+          class="password-display"
+          id="passwordDisplay"
+          aria-live="polite"
+          aria-atomic="true"
+          aria-label="Generated password"
+        >
+          <!-- Populated by JS — colour-coded spans per character type -->
+          <span class="pw-placeholder">Click Generate to create a password</span>
+        </div>
+        <div class="output-actions">
+          <button
+            class="icon-btn"
+            id="refreshBtn"
+            aria-label="Generate new password"
+            title="Regenerate"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 3v5h5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button
+            class="icon-btn"
+            id="copyBtn"
+            aria-label="Copy password to clipboard"
+            title="Copy"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" class="copy-icon">
+              <rect x="9" y="9" width="13" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="check-icon" style="display:none;">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Copy confirmation toast -->
+        <div class="copy-toast" id="copyToast" role="status" aria-live="polite">Copied!</div>
+      </div>
+
+      <!-- ---- STRENGTH METER ---- -->
+      <div class="strength-section" aria-label="Password strength indicator">
+        <div class="strength-header">
+          <span class="strength-label-text">Strength</span>
+          <span class="strength-name" id="strengthName">—</span>
+        </div>
+        <div class="strength-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="strengthBar" aria-label="Password strength bar">
+          <div class="strength-fill" id="strengthFill"></div>
+        </div>
+        <div class="entropy-row">
+          <span class="entropy-label">Entropy</span>
+          <span class="entropy-value" id="entropyValue">— bits</span>
+        </div>
+      </div>
+
+      <!-- ---- LENGTH CONTROL ---- -->
+      <div class="control-group" role="group" aria-labelledby="lengthLabel">
+        <div class="control-label-row">
+          <label id="lengthLabel" for="lengthSlider" class="control-label">Password Length</label>
+          <output class="length-output" id="lengthOutput" for="lengthSlider">16</output>
+        </div>
+        <div class="slider-track-wrap">
+          <input
+            type="range"
+            id="lengthSlider"
+            class="length-slider"
+            min="6"
+            max="64"
+            value="16"
+            step="1"
+            aria-valuemin="6"
+            aria-valuemax="64"
+            aria-valuenow="16"
+            aria-label="Password length: 16 characters"
+          />
+          <div class="slider-labels" aria-hidden="true">
+            <span>6</span>
+            <span>64</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- CHARACTER SET TOGGLES ---- -->
+      <fieldset class="charset-fieldset" id="charsetFieldset">
+        <legend class="control-label">Character Sets</legend>
+        <div class="charset-grid">
+
+          <label class="toggle-card" for="inclUppercase">
+            <input type="checkbox" id="inclUppercase" checked aria-describedby="uppercaseDesc" />
+            <div class="toggle-card-inner">
+              <span class="toggle-example uppercase-ex">ABC</span>
+              <span class="toggle-name">Uppercase</span>
+              <span class="toggle-desc" id="uppercaseDesc">A – Z</span>
+            </div>
+            <span class="toggle-check" aria-hidden="true">&#10003;</span>
+          </label>
+
+          <label class="toggle-card" for="inclLowercase">
+            <input type="checkbox" id="inclLowercase" checked aria-describedby="lowercaseDesc" />
+            <div class="toggle-card-inner">
+              <span class="toggle-example lowercase-ex">abc</span>
+              <span class="toggle-name">Lowercase</span>
+              <span class="toggle-desc" id="lowercaseDesc">a – z</span>
+            </div>
+            <span class="toggle-check" aria-hidden="true">&#10003;</span>
+          </label>
+
+          <label class="toggle-card" for="inclNumbers">
+            <input type="checkbox" id="inclNumbers" checked aria-describedby="numbersDesc" />
+            <div class="toggle-card-inner">
+              <span class="toggle-example numbers-ex">123</span>
+              <span class="toggle-name">Numbers</span>
+              <span class="toggle-desc" id="numbersDesc">0 – 9</span>
+            </div>
+            <span class="toggle-check" aria-hidden="true">&#10003;</span>
+          </label>
+
+          <label class="toggle-card" for="inclSymbols">
+            <input type="checkbox" id="inclSymbols" aria-describedby="symbolsDesc" />
+            <div class="toggle-card-inner">
+              <span class="toggle-example symbols-ex">!@#</span>
+              <span class="toggle-name">Symbols</span>
+              <span class="toggle-desc" id="symbolsDesc">!@#$%^&amp;*</span>
+            </div>
+            <span class="toggle-check" aria-hidden="true">&#10003;</span>
+          </label>
+
+        </div>
+      </fieldset>
+
+      <!-- ---- ADVANCED OPTIONS ---- -->
+      <fieldset class="options-fieldset">
+        <legend class="control-label">Advanced Options</legend>
+        <div class="options-list">
+
+          <label class="option-row" for="excludeAmbiguous">
+            <div class="option-text">
+              <span class="option-name">Exclude Ambiguous</span>
+              <span class="option-desc">Removes 0, O, l, 1, I for readability</span>
+            </div>
+            <span class="toggle-switch">
+              <input type="checkbox" id="excludeAmbiguous" role="switch" aria-checked="false" />
+              <span class="switch-track" aria-hidden="true">
+                <span class="switch-thumb"></span>
+              </span>
+            </span>
+          </label>
+
+          <label class="option-row" for="noRepeats">
+            <div class="option-text">
+              <span class="option-name">No Repeated Characters</span>
+              <span class="option-desc">Each character appears at most once</span>
+            </div>
+            <span class="toggle-switch">
+              <input type="checkbox" id="noRepeats" role="switch" aria-checked="false" />
+              <span class="switch-track" aria-hidden="true">
+                <span class="switch-thumb"></span>
+              </span>
+            </span>
+          </label>
+
+        </div>
+      </fieldset>
+
+      <!-- ---- QUANTITY ---- -->
+      <div class="control-group" role="group" aria-labelledby="quantityLabel">
+        <div class="control-label-row">
+          <label id="quantityLabel" for="quantityInput" class="control-label">Quantity</label>
+          <span class="control-hint">Generate up to 10 passwords at once</span>
+        </div>
+        <div class="quantity-row">
+          <button class="qty-btn" id="qtyMinus" aria-label="Decrease quantity">&#8722;</button>
+          <input
+            type="number"
+            id="quantityInput"
+            class="qty-input"
+            value="1"
+            min="1"
+            max="10"
+            aria-label="Number of passwords to generate"
+          />
+          <button class="qty-btn" id="qtyPlus" aria-label="Increase quantity">&#43;</button>
+        </div>
+      </div>
+
+      <!-- ---- GENERATE BUTTON ---- -->
+      <button class="btn-generate" id="generateBtn" type="button" aria-label="Generate password">
+        <span class="btn-text">Generate Password</span>
+        <span class="btn-icon" aria-hidden="true">&#9656;</span>
+      </button>
+
+      <!-- ---- CHAR SET COMPOSITION ---- -->
+      <div class="composition-row" id="compositionRow" aria-label="Character pool composition">
+        <span class="comp-label">Pool size:</span>
+        <span class="comp-value" id="compValue">62 characters</span>
+      </div>
+
+    </section>
+    <!-- /.generator-panel -->
+
+    <!-- ========== RIGHT COLUMN: HISTORY + INFO ========== -->
+    <aside class="info-panel" aria-label="Password history and information">
+
+      <!-- ---- BATCH OUTPUT (when qty > 1) ---- -->
+      <section class="batch-section" id="batchSection" aria-labelledby="batchHeading" hidden>
+        <h2 id="batchHeading" class="panel-subtitle">Generated Passwords</h2>
+        <ul class="batch-list" id="batchList" aria-live="polite"></ul>
+      </section>
+
+      <!-- ---- HISTORY ---- -->
+      <section class="history-section" aria-labelledby="historyHeading">
+        <div class="history-header">
+          <h2 id="historyHeading" class="panel-subtitle">Recent History</h2>
+          <button class="text-btn" id="clearHistoryBtn" aria-label="Clear password history">Clear</button>
+        </div>
+        <ul class="history-list" id="historyList" aria-live="polite" aria-label="Password history">
+          <li class="history-empty" id="historyEmpty">No passwords generated yet.</li>
+        </ul>
+      </section>
+
+      <!-- ---- STRENGTH GUIDE ---- -->
+      <section class="guide-section" aria-labelledby="guideHeading">
+        <h2 id="guideHeading" class="panel-subtitle">Strength Guide</h2>
+        <ul class="guide-list" role="list">
+          <li class="guide-item">
+            <span class="guide-dot" style="background: var(--clr-crit)"></span>
+            <div>
+              <strong>Very Weak</strong>
+              <span>Under 28 bits — trivially crackable</span>
+            </div>
+          </li>
+          <li class="guide-item">
+            <span class="guide-dot" style="background: var(--clr-warn)"></span>
+            <div>
+              <strong>Weak</strong>
+              <span>28 – 35 bits — vulnerable to brute force</span>
+            </div>
+          </li>
+          <li class="guide-item">
+            <span class="guide-dot" style="background: var(--clr-fair)"></span>
+            <div>
+              <strong>Fair</strong>
+              <span>36 – 59 bits — moderate protection</span>
+            </div>
+          </li>
+          <li class="guide-item">
+            <span class="guide-dot" style="background: var(--clr-good)"></span>
+            <div>
+              <strong>Strong</strong>
+              <span>60 – 95 bits — good for most accounts</span>
+            </div>
+          </li>
+          <li class="guide-item">
+            <span class="guide-dot" style="background: var(--clr-great)"></span>
+            <div>
+              <strong>Very Strong</strong>
+              <span>96+ bits — enterprise / high-security</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ---- TIPS ---- -->
+      <section class="tips-section" aria-labelledby="tipsHeading">
+        <h2 id="tipsHeading" class="panel-subtitle">Security Tips</h2>
+        <ul class="tips-list" role="list">
+          <li>Use a unique password for every account.</li>
+          <li>Aim for 96+ bits of entropy for critical accounts.</li>
+          <li>Store passwords in a reputable password manager.</li>
+          <li>Enable two-factor authentication wherever available.</li>
+          <li>Never reuse a password from a known data breach.</li>
+        </ul>
+      </section>
+
+    </aside>
+    <!-- /.info-panel -->
+
+  </main>
+  <!-- /.main-layout -->
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span>
+        <span class="brand-icon" aria-hidden="true">&#9670;</span>
+        CipherForge — Passwords generated entirely in your browser. Nothing is sent to any server.
+      </span>
+      <span class="footer-tech">Built with HTML5 · CSS3 · Vanilla JS</span>
+    </div>
+  </footer>
+
+  <script src="js/generator.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

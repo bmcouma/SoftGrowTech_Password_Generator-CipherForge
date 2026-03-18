@@ -1,0 +1,182 @@
+/* ============================================================
+   CipherForge — animations.css
+   All keyframe definitions, transitions, and motion utilities.
+   ============================================================ */
+
+/* ---------- PAGE LOAD ---------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ---------- BRAND / HEADER ---------- */
+
+@keyframes brandReveal {
+  from {
+    opacity: 0;
+    letter-spacing: 0.6em;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.08em;
+    filter: blur(0);
+  }
+}
+
+/* ---------- PASSWORD OUTPUT ---------- */
+
+/* Scramble shimmer — applied during generation */
+@keyframes scramble {
+  0%   { opacity: 0.3; filter: blur(1px); }
+  50%  { opacity: 0.8; filter: blur(0.5px); }
+  100% { opacity: 1;   filter: blur(0); }
+}
+
+/* Characters fade in staggered */
+@keyframes charReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Cursor blink inside the display */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ---------- STRENGTH METER ---------- */
+
+@keyframes strengthGrow {
+  from { width: 0; }
+  /* width set by JS via inline style; animation handles the grow */
+}
+
+/* Pulse on strength change */
+@keyframes strengthPulse {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 12px currentColor; }
+}
+
+/* ---------- COPY TOAST ---------- */
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.95);
+  }
+}
+
+/* ---------- GENERATE BUTTON ---------- */
+
+@keyframes btnPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 255, 160, 0.25); }
+  70%  { box-shadow: 0 0 0 14px rgba(0, 255, 160, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 160, 0); }
+}
+
+/* ---------- BACKGROUND GRID ---------- */
+
+@keyframes gridFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- GLOW PULSE ---------- */
+
+@keyframes glowDrift {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  33%       { transform: scale(1.08) translate(2%, -2%); }
+  66%       { transform: scale(0.95) translate(-2%, 2%); }
+}
+
+/* ---------- HISTORY ITEM ENTRANCE ---------- */
+
+@keyframes historySlide {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ---------- BATCH ITEM ENTRANCE ---------- */
+
+@keyframes batchFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- TOGGLE CARD CHECK MARK ---------- */
+
+@keyframes checkPop {
+  0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+  70%  { transform: scale(1.2) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* ---------- ENTROPY NUMBER COUNT UP ---------- */
+
+@keyframes numberFlip {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- SCAN LINE ---------- */
+
+@keyframes scanLine {
+  0%   { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* ---------- REDUCED MOTION OVERRIDE ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
