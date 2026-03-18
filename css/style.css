@@ -1223,3 +1223,95 @@ ul, ol {
     gap: 0.3rem;
   }
 }
+
+/* ==========================================================
+   TEKLINI TECH BRANDING & WHATSAPP BUTTON
+========================================================== */
+
+.brand-logo {
+  height: 28px;
+  width: auto;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 255, 160, 0.2);
+}
+
+.footer-logo {
+  height: 16px;
+  width: auto;
+  border-radius: 3px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+.footer-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-owner {
+  color: var(--clr-text-muted);
+  font-size: 0.85rem;
+}
+
+.teklini-link {
+  color: var(--clr-green);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.teklini-link:hover {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0, 255, 160, 0.4);
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+  animation: pulse-wa 2s infinite ease-in-out;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0px 8px 25px rgba(37, 211, 102, 0.6);
+  color: #FFF;
+  animation: none;
+}
+
+.wa-icon {
+  width: 35px;
+  height: 35px;
+}
+
+@keyframes pulse-wa {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+@media (max-width: 600px) {
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+  .wa-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
