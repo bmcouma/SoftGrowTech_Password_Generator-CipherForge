@@ -1285,14 +1285,15 @@ ul, ol {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 60px;
-  height: 60px;
   background-color: #25d366;
   color: #FFF;
-  border-radius: 50%;
+  border-radius: 30px;
+  padding: 0 1.2rem;
+  height: 52px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.6rem;
+  text-decoration: none;
   box-shadow: 0px 4px 15px rgba(37, 211, 102, 0.4);
   z-index: 1000;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
@@ -1300,15 +1301,22 @@ ul, ol {
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1) translateY(-5px);
+  transform: scale(1.05) translateY(-5px);
   box-shadow: 0px 8px 25px rgba(37, 211, 102, 0.6);
   color: #FFF;
   animation: none;
 }
 
 .wa-icon {
-  width: 35px;
-  height: 35px;
+  width: 24px;
+  height: 24px;
+}
+
+.wa-text {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
 }
 
 @keyframes pulse-wa {
