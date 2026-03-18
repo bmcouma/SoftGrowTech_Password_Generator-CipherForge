@@ -1228,20 +1228,34 @@ ul, ol {
    TEKLINI TECH BRANDING & WHATSAPP BUTTON
 ========================================================== */
 
-.brand-logo {
-  height: 28px;
-  width: auto;
-  border-radius: 4px;
+.brand-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 255, 160, 0.2);
 }
 
-.footer-logo {
-  height: 16px;
-  width: auto;
-  border-radius: 3px;
-  margin-right: 0.4rem;
+.brand-icon-svg {
+  filter: drop-shadow(0 0 8px rgba(0, 255, 160, 0.4));
+  transition: transform var(--transition);
+}
+
+.brand:hover .brand-icon-svg {
+  transform: scale(1.1);
+}
+
+.lock-shackle {
+  transition: transform 0.3s ease-in-out;
+}
+
+.brand:hover .lock-shackle {
+  transform: translateY(-3px) translateX(2px);
+}
+
+.footer-icon-svg {
   vertical-align: middle;
+  margin-right: 0.4rem;
+  opacity: 0.8;
 }
 
 .footer-main {
