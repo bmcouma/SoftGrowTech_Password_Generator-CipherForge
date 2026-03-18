@@ -1337,3 +1337,30 @@ ul, ol {
     height: 28px;
   }
 }
+
+/* ---- Contact / Marketing Section ---- */
+.contact-section {
+  border-color: rgba(0, 255, 160, 0.3) !important;
+  background: linear-gradient(to bottom right, var(--clr-surface), rgba(0, 255, 160, 0.05));
+}
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--clr-text);
+  text-decoration: none;
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  transition: all var(--transition);
+}
+.contact-btn:hover {
+  transform: translateY(-2px);
+}
+.wa-btn:hover { border-color: #25d366; color: #25d366; }
+.email-btn:hover { border-color: var(--clr-blue); color: var(--clr-blue); }
+.call-btn:hover { border-color: var(--clr-char-sym); color: var(--clr-char-sym); }
